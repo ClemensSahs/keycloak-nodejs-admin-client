@@ -1,9 +1,9 @@
 import urlJoin from 'url-join';
-import template from 'url-template';
+import {parseTemplate} from 'url-template';
 import axios, {AxiosRequestConfig, AxiosRequestHeaders, Method} from 'axios';
 import querystring from 'query-string';
-import {pick, omit, isUndefined, last} from 'lodash';
-import {KeycloakAdminClient} from '../client';
+import {pick, omit, isUndefined, last} from 'lodash-es';
+import type {KeycloakAdminClient} from '../client.js';
 
 // constants
 const SLASH = '/';
@@ -177,7 +177,7 @@ export class Agent {
     const newPath = urlJoin(this.basePath, path);
 
     // Parse template and replace with values from urlParams
-    const pathTemplate = template.parse(newPath);
+    const pathTemplate = parseTemplate(newPath);
     const parsedPath = pathTemplate.expand(urlParams);
     const url = `${this.getBaseUrl?.() ?? ''}${parsedPath}`;
 
